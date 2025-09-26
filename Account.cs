@@ -15,6 +15,6 @@ class Account : Iuser
 
   public bool TryLogin(string username, string password)
   {
-    return username == Email && password == _password;
+    return username == Name && password == _password;
   }
 }
