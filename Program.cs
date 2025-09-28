@@ -13,6 +13,7 @@ while (running)
     Console.WriteLine("\n\nquit");
     switch (Console.ReadLine())
     {
+
       case "quit":
         active_user = null;
         break;
@@ -24,6 +25,16 @@ while (running)
     switch (Console.ReadLine())
     {
       case "add":
+        Console.WriteLine("Welcome new user, please enter your credentials\n\n\n");
+        Console.Write("Name: ");
+        string? name = Console.ReadLine();
+        Console.Write("Email: ");
+        string? email = Console.ReadLine();
+        Console.Write("Password");
+        string? _password = Console.ReadLine();
+        users.Add(new Account(name, email, _password));
+
+
         break;
       case "login":
         if (active_user == null)
@@ -34,9 +45,9 @@ while (running)
           string? password = Console.ReadLine();
           foreach (Iuser user in users)
           {
-            if (username is null || password is null)
+            if (username is null or "" || password is null or "")
             {
-              Console.WriteLine("username does not exist");
+              Console.WriteLine("username or password is wrong.");
             }
             else if (user.TryLogin(username, password))
             {
