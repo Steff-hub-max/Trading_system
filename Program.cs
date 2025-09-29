@@ -1,6 +1,7 @@
 ﻿using App;
 
 List<Iuser> users = new List<Iuser>();
+List<Items> item = new List<Items>();
 users.Add(new Account("test", "a@a", "test"));
 Iuser? active_user = null;
 
@@ -10,9 +11,27 @@ while (running)
   if (active_user is Account a)
   {
     Console.WriteLine("Welcome " + a.Name);
-    Console.WriteLine("\n\nquit");
+    Console.WriteLine("\n\nnew- add an item to your inventory\nquit");
     switch (Console.ReadLine())
     {
+      case "new":
+        Console.Write("Enter the name of the item: ");
+        string? item_name = Console.ReadLine();
+        Console.Write("Enter a description of the item");
+        string? item_info = Console.ReadLine();
+        string item_owner = a.Name;
+        item.Add(new Items(item_name, item_info, item_owner));
+        break;
+      case "browse":
+        Console.WriteLine("All items available to trade: ");
+        foreach (var i in item)
+        {
+          if (i.Item_owner != a.Name)
+          {
+            Console.WriteLine($"{i.Item_name},Item description: {i.Item_info},item owner: {i.Item_owner}");
+          }
+        }
+        break;
 
       case "quit":
         active_user = null;
