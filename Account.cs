@@ -1,6 +1,6 @@
 namespace App;
 
-class Account : Iuser
+class Account
 {
   public string Name;
   public string Email;

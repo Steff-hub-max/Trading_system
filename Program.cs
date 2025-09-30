@@ -1,8 +1,14 @@
 ﻿using App;
 string[] users_csv = File.ReadAllLines("Account.csv");
+string[] items_csv = File.ReadAllLines("Items.csv");
 List<Account> users = new List<Account>();
 List<Items> item = new List<Items>();
 Account? active_user = null;
+foreach (string items_data in items_csv)
+{
+  string[] split_item_data = items_data.Split(",");
+  item.Add(new Items(split_item_data[0], split_item_data[1], split_item_data[2]));
+}
 foreach (string user_data in users_csv)
 {
   string[] split_user_data = user_data.Split(",");
@@ -25,6 +31,8 @@ while (running)
         string? item_info = Console.ReadLine();
         string item_owner = active_user.Name;
         item.Add(new Items(item_name!, item_info!, item_owner));
+        string[] new_item = { $"{item_name},{item_info},{item_owner}" };
+        File.AppendAllLines("Items.csv", new_item);
         break;
       case "browse":
         Console.WriteLine("All items available to trade: ");
