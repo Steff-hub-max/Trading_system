@@ -1,8 +1,8 @@
 ﻿using App;
 string[] users_csv = File.ReadAllLines("Account.csv");
-List<Iuser> users = new List<Iuser>();
+List<Account> users = new List<Account>();
 List<Items> item = new List<Items>();
-Iuser? active_user = null;
+Account? active_user = null;
 foreach (string user_data in users_csv)
 {
   string[] split_user_data = user_data.Split(",");
@@ -12,9 +12,9 @@ foreach (string user_data in users_csv)
 bool running = true;
 while (running)
 {
-  if (active_user is Account a)
+  if (active_user != null)
   {
-    Console.WriteLine($"Welcome {a.Name}");
+    Console.WriteLine($"Welcome {active_user.Name}");
     Console.WriteLine("\n\nnew- add an item to your inventory\nbrowse\nlogout");
     switch (Console.ReadLine())
     {
@@ -23,14 +23,14 @@ while (running)
         string? item_name = Console.ReadLine();
         Console.Write("Enter a description of the item: ");
         string? item_info = Console.ReadLine();
-        string item_owner = a.Name;
+        string item_owner = active_user.Name;
         item.Add(new Items(item_name!, item_info!, item_owner));
         break;
       case "browse":
         Console.WriteLine("All items available to trade: ");
         foreach (var i in item)
         {
-          if (i.Item_owner != a.Name)
+          if (i.Item_owner != active_user.Name)
           {
             Console.WriteLine($"{i.Item_name},Item description: {i.Item_info},item owner: {i.Item_owner}");
           }
@@ -67,7 +67,7 @@ while (running)
           string? username = Console.ReadLine();
           Console.Write("password: ");
           string? password = Console.ReadLine();
-          foreach (Iuser user in users)
+          foreach (Account user in users)
           {
             if (username is null or "" || password is null or "")
             {
