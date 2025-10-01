@@ -3,13 +3,11 @@ namespace App;
 class Account
 {
   public string Name;
-  public string Email;
   string _password;
 
-  public Account(string name, string email, string password)
+  public Account(string name, string password)
   {
     Name = name;
-    Email = email;
     _password = password;
   }
 

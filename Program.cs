@@ -12,7 +12,7 @@ foreach (string items_data in items_csv)
 foreach (string user_data in users_csv)
 {
   string[] split_user_data = user_data.Split(",");
-  users.Add(new Account(split_user_data[0], split_user_data[1], split_user_data[2]));
+  users.Add(new Account(split_user_data[0], split_user_data[1]));
 }
 
 bool running = true;
@@ -21,10 +21,10 @@ while (running)
   if (active_user != null)
   {
     Console.WriteLine($"Welcome {active_user.Name}");
-    Console.WriteLine("\n\nnew- add an item to your inventory\nbrowse\nlogout");
+    Console.WriteLine("\n\nadd- add an item\nbrowse\ntrade\nlogout");
     switch (Console.ReadLine())
     {
-      case "new":
+      case "add":
         Console.Write("Enter the name of the item: ");
         string? item_name = Console.ReadLine();
         Console.Write("Enter a description of the item: ");
@@ -44,6 +44,7 @@ while (running)
           }
         }
         break;
+      case "trade":
 
 
       case "logout":
@@ -53,19 +54,17 @@ while (running)
   }
   else
   {
-    Console.WriteLine("add- Register new account\nlogin - Login on a new account\nquit - closes the program");
+    Console.WriteLine("register- Register new account\nlogin - Login on a new account\nquit - closes the program");
     switch (Console.ReadLine())
     {
-      case "add":
+      case "register":
         Console.WriteLine("Welcome new user, please enter your credentials\n\n\n");
         Console.Write("Name: ");
         string? name = Console.ReadLine();
-        Console.Write("Email: ");
-        string? email = Console.ReadLine();
         Console.Write("Password: ");
         string? _password = Console.ReadLine();
-        users.Add(new Account(name, email, _password));
-        string[] new_account = { $"{name},{email},{_password}" };
+        users.Add(new Account(name!, _password!));
+        string[] new_account = { $"{name},{_password}" };
         File.AppendAllLines("Account.csv", new_account);
         break;
       case "login":
